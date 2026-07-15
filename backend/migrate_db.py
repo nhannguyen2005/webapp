@@ -13,7 +13,7 @@ from app.models.product import Category, Product, DigitalAccount
 from app.models.order import Order, OrderItem
 
 async def create_new_tables():
-    engine = create_async_engine(settings.DATABASE_URL, echo=True)
+    engine = create_async_engine(settings.async_database_url, echo=True)
     async with engine.begin() as conn:
         print("Running create_all to create any missing tables...")
         await conn.run_sync(Base.metadata.create_all)

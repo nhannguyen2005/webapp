@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: shopdv-backend
+    env: python
+    rootDir: backend
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python migrate_db.py && uvicorn main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: shopdv-db
+          property: connectionString
+      - key: BACKEND_CORS_ORIGINS
+        value: '["*"]'
+      - key: PYTHON_VERSION
+        value: 3.10.0
+
+databases:
+  - name: shopdv-db
+    databaseName: shopdv
+    user: shopdv
+    plan: free
